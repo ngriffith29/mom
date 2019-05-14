@@ -1,59 +1,75 @@
 // Your web app's Firebase configuration
-var firebaseConfig = {
-    apiKey: "AIzaSyBtAIaRUUUAObt4kutj0B4TkvuzxM7rFlI",
-    authDomain: "mom-2-8c7c3.firebaseapp.com",
-    databaseURL: "https://mom-2-8c7c3.firebaseio.com",
-    projectId: "mom-2-8c7c3",
-    storageBucket: "mom-2-8c7c3.appspot.com",
-    messagingSenderId: "705698950670",
-    appId: "1:705698950670:web:537d20f47a314bd2"
-  };
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
-
-
-//reference messages collection
-
-let messagesRef = firebase.database().ref('name');
-
-
-const names = []
-
-// Your web app's Firebase configuration
-
-
-
-
-const button = document.querySelector(".d-button")
-const dInput = document.querySelector('.d-input')
-let a = document.createElement('H2')
-console.log(dInput)
-    button.addEventListener("click", function(){
-        if(names.length === 15){
-            alert('this event is full sorry pick a new one')
-        }else{
-            names.push(dInput.value)
-
-                var h = document.createElement("H1")
-                text = names.slice(-1)[0]               // Create a <h1> element
-                var t = document.createTextNode(`${text}`);     // Create a text node
-                h.appendChild(t);
-                document.body.appendChild(h);
-
-                saveMessage(name)
-                console.log(names)       
-        }
+document.addEventListener('DOMContentLoaded', function() {
+    var firebaseConfig = {
+        apiKey: "AIzaSyDgzby0LDkwfnd6jt8aa1U6Z4OVAfraz2A",
+        authDomain: "note-3-3c755.firebaseapp.com",
+        databaseURL: "https://note-3-3c755.firebaseio.com",
+        projectId: "note-3-3c755",
+        storageBucket: "note-3-3c755.appspot.com",
+        messagingSenderId: "234112031696",
+        appId: "1:234112031696:web:7326fc2788b44a6c"
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+    
+    
+    //reference messages collection
+    
+    let database = firebase.database()
+    let messagesRef = database.ref('new ref');
+    
+    
+    let names = []
+    
+    // Your web app's Firebase configuration
+    
+    
+    
+    
+    const button = document.querySelector(".d-button")
+    const dInput = document.querySelector('.d-input')
+    let a = document.createElement('H2')
+    console.log(dInput)
+        button.addEventListener("click", function(){
+            if(names.length === 30){
+                alert('this event is full sorry pick a new one')
+            }else{
+    
+                    saveMessage(dInput.value)
+                    console.log(names)       
+            }
+           
+        })
+    
        
+    
+    
+    //save message to firebse
+    
+    function saveMessage(name){
+        let newNameref = messagesRef.push();
+        newNameref.set({
+            name: name,
+        })
+    }
+    
+    messagesRef.on('value', function(snapShot){
+       const  users = snapShot.val()
+        document.getElementById('output').innerHTML = ''
+       if(users){
+        names = Object.keys(users)
+        Object.keys(users).forEach((key) => {
+             let text = users[key].name
+             var h = document.createElement("H1")
+                          // Create a <h1> element
+             var t = document.createTextNode(`${text}`);     // Create a text node
+             h.appendChild(t);
+             document.getElementById('output').appendChild(h);
+        })
+      
+    
+       }
+       
+    
     })
-
-   
-
-
-//save message to firebse
-
-function saveMessage(name){
-    let newNameref = messagesRef.push();
-    newNameref.set({
-        name: name,
-    })
-}
+})
